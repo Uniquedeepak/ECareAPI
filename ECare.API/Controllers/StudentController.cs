@@ -20,6 +20,22 @@ namespace ECare.API.Controllers
         {
             LoginStdAdmissionNo = RequestContext.Principal.Identity.Name;
         }
+
+        [Authorize]
+        [Route("School")]
+        public async Task<IHttpActionResult> GetSchool()
+        {
+            SchoolData obj = new SchoolData();
+            var result = obj.GetSchool();
+            Response res = new Response()
+            {
+                ResponseCode = "200",
+                ResponseMessage = "Success",
+                Result = result
+            };
+            return Ok(res);
+        }
+
         [Authorize]
         [Route("Student")]
         public async Task<IHttpActionResult> GetStudent()
@@ -92,18 +108,22 @@ namespace ECare.API.Controllers
             HomeworkData obj = new HomeworkData();
             tbl_homework homework = obj.Get(id);
 
-            MemoryStream stream = new MemoryStream(homework.data);
-            HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+            if (homework !=null)
             {
-                Content = new StreamContent(stream)
-            };
-            httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = homework.month
-            };
-            httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(homework.contenttype);
-            ResponseMessageResult responseMessageResult = ResponseMessage(httpResponseMessage);
-            return responseMessageResult;
+                MemoryStream stream = new MemoryStream(homework.data);
+                HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(stream)
+                };
+                httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = homework.month
+                };
+                httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(homework.contenttype);
+                ResponseMessageResult responseMessageResult = ResponseMessage(httpResponseMessage);
+                return responseMessageResult;
+            }
+            return NotFound();
         }
 
         [Authorize]
