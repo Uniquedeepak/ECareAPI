@@ -1,22 +1,18 @@
 ﻿using ECare.API.Infrastructure;
+using ECare.API.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Net.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
-using ECare.API.Models;
-using System.Security.Claims;
+using System.Web.Http;
 
 namespace ECare.API.Controllers
 {
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController
     {
-
+       
         [Authorize(Roles="Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
@@ -66,7 +62,10 @@ namespace ECare.API.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                var message = string.Join(" | ", ModelState.Values
+                    .SelectMany(e => e.Errors)
+                    .Select(m => m.ErrorMessage));
+                return BadRequest(message);
             }
 
             var user = new ApplicationUser()
@@ -79,7 +78,6 @@ namespace ECare.API.Controllers
                 //JoinDate = DateTime.Now.Date,
             };
 
-
             IdentityResult addUserResult = await this.AppUserManager.CreateAsync(user, createUserModel.Password);
 
             if (!addUserResult.Succeeded)
@@ -87,6 +85,10 @@ namespace ECare.API.Controllers
                 return GetErrorResult(addUserResult);
             }
 
+            if (createUserModel.RoleName.ToUpper().Equals("STUDENT"))
+            {
+                AssignStudentRole(user.Id, new string[] { createUserModel.RoleName });
+            }
             //string code = await this.AppUserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
             //var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
@@ -269,6 +271,45 @@ namespace ECare.API.Controllers
             }
 
             return Ok();
+        }
+
+        private bool AssignStudentRole(string id, string[] rolesToAssign)
+        {
+            var appUser =  this.AppUserManager.FindByIdAsync(id).Result;
+
+            if (appUser == null)
+            {
+                return false;
+            }
+
+            var currentRoles = this.AppUserManager.GetRolesAsync(appUser.Id).Result;
+
+            var rolesNotExists = rolesToAssign.Except(this.AppRoleManager.Roles.Select(x => x.Name)).ToArray();
+
+            if (rolesNotExists.Count() > 0)
+            {
+
+                ModelState.AddModelError("", string.Format("Roles '{0}' does not exixts in the system", string.Join(",", rolesNotExists)));
+                return false;
+            }
+
+            IdentityResult removeResult = this.AppUserManager.RemoveFromRolesAsync(appUser.Id, currentRoles.ToArray()).Result;
+
+            if (!removeResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to remove user roles");
+                return false;
+            }
+
+            IdentityResult addResult = this.AppUserManager.AddToRolesAsync(appUser.Id, rolesToAssign).Result;
+
+            if (!addResult.Succeeded)
+            {
+                ModelState.AddModelError("", "Failed to add user roles");
+                return false;
+            }
+
+            return true;
         }
 
     }

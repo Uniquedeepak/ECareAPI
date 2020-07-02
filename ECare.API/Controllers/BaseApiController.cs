@@ -61,10 +61,15 @@ namespace ECare.API.Controllers
             {
                 if (result.Errors != null)
                 {
+                    
                     foreach (string error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }
+                    var message = string.Join(" | ", ModelState.Values
+                   .SelectMany(e => e.Errors)
+                   .Select(m => m.ErrorMessage));
+                    return BadRequest(message);
                 }
 
                 if (ModelState.IsValid)
