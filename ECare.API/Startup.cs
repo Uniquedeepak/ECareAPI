@@ -1,5 +1,6 @@
 ﻿using ECare.API.Infrastructure;
 using ECare.API.Providers;
+using ECare.BAL.Model;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler.Encoder;
@@ -21,12 +22,15 @@ namespace ECare.API
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
 
+            ECare.API.Models.AutoMapper.Initialize();
+
             ConfigureOAuthTokenGeneration(app);
 
             ConfigureOAuthTokenConsumption(app);
 
             ConfigureWebApi(httpConfig);
 
+            
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(httpConfig);

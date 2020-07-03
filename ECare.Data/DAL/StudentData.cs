@@ -47,8 +47,6 @@ namespace ECare.Data.DAL
             studentDetails.ForEach(cc => cc.Class = _class.GetClassName(cc.Class));
             return studentDetails;
         }
-
-
         public List<AdmissionForm> GetMultiChildParent()
         {
             ClassData _class = new ClassData();
@@ -60,7 +58,6 @@ namespace ECare.Data.DAL
                  .ToList();
             return studentDetails;
         }
-
         public string GetNextAdmNo(int ClassId)
         {
             bool IsPrimaryClass = SchoolDB.Classes.Any(x => x.CID==ClassId && x.Prefix.Equals("P"));
@@ -70,25 +67,22 @@ namespace ECare.Data.DAL
             Admission =Convert.ToString(Convert.ToInt32(Admission) + 1);
             return IsPrimaryClass?  "P" + Admission.ToString(): Admission.ToString();
         }
-
         //get all student
         [HttpGet]
         public IEnumerable<AdmissionForm> Get()
         {
             return SchoolDB.AdmissionForms.Where(x => x.ESession.Contains(SchoolSession)).AsEnumerable();
         }
-
         //get student by id
         public AdmissionForm Get(string AdmissionNo)
         {
-            AdmissionForm student = SchoolDB.AdmissionForms.Where(x => x.AdmissionNo.Equals(AdmissionNo)).FirstOrDefault();
+            AdmissionForm student = SchoolDB.AdmissionForms.Where(x => x.AdmissionNo.Equals(AdmissionNo)).OrderBy(x=>x.AdmissionId).FirstOrDefault();
             if (student == null)
             {
                 return null;
             }
             return student;
         }
-
         //insert student
         public int InserStudent(AdmissionForm student)
         {
@@ -100,7 +94,6 @@ namespace ECare.Data.DAL
             }
             return result;
         }
-
         //update customer
         [HttpPut]
         public bool Put(int AdmissionId, AdmissionForm student)
@@ -135,7 +128,6 @@ namespace ECare.Data.DAL
             }
             return true;
         }
-
         //delete customer by id
         public AdmissionForm Delete(int AdmissionId)
         {

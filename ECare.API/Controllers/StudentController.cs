@@ -1,14 +1,14 @@
 ﻿using ECare.API.Models;
+using ECare.BAL.Module;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.IO;
-using System.Net.Http.Headers;
-using ECare.Data.DAL;
-using ECare.Data;
 
 namespace ECare.API.Controllers
 {
@@ -16,17 +16,18 @@ namespace ECare.API.Controllers
     public class StudentController : ApiController
     {
         string LoginStdAdmissionNo = string.Empty;
+        IStudentHelper StudentHelper = null;
         public StudentController()
         {
             LoginStdAdmissionNo = RequestContext.Principal.Identity.Name;
+            StudentHelper = new StudentHelper();
         }
 
         [Authorize]
         [Route("School")]
         public async Task<IHttpActionResult> GetSchool()
         {
-            SchoolData obj = new SchoolData();
-            var result = obj.GetSchool();
+            var result = StudentHelper.GetSchool().Result;
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -40,8 +41,7 @@ namespace ECare.API.Controllers
         [Route("Student")]
         public async Task<IHttpActionResult> GetStudent()
         {
-            StudentData obj = new StudentData();
-            var result = obj.Get(LoginStdAdmissionNo);
+            var result = StudentHelper.GetStudent(LoginStdAdmissionNo).Result;
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -55,8 +55,7 @@ namespace ECare.API.Controllers
         [Route("fee")]
         public async Task<IHttpActionResult> GetStudentFee()
         {
-            FeesData obj = new FeesData();
-            var Result = obj.GetStudentFeeDetail(LoginStdAdmissionNo);
+            var Result = StudentHelper.GetStudentFee(LoginStdAdmissionNo).Result;
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -70,10 +69,8 @@ namespace ECare.API.Controllers
         [Route("homework")]
         public async Task<IHttpActionResult> GetHomework()
         {
-            HomeworkData obj = new HomeworkData();
-            StudentData std = new StudentData();
-            string ClassId = std.Get(LoginStdAdmissionNo).Class;
-            List<tbl_homework> homeworkList = obj.GetHomeworkByClass(ClassId);
+            var homeworkList = StudentHelper.GetHomeworkByClass(LoginStdAdmissionNo).Result;
+            
             List<dynamic> Result = new List<dynamic>();
             foreach (var item in homeworkList)
             {
@@ -86,7 +83,7 @@ namespace ECare.API.Controllers
                     item.contenttype,
                     item.date,
                     item.desciption,
-                    data = "Call API - homework/file/{id}"
+                    data = $"Call API - api/school/homework/file/{item.id}"
                 };
                 Result.Add(homework);
             }
@@ -105,8 +102,7 @@ namespace ECare.API.Controllers
         public async Task<IHttpActionResult> GetFile(int id)
         {
 
-            HomeworkData obj = new HomeworkData();
-            tbl_homework homework = obj.Get(id);
+            var homework = StudentHelper.GetHomeworkById(id).Result;
 
             if (homework !=null)
             {
@@ -130,10 +126,7 @@ namespace ECare.API.Controllers
         [Route("notification")]
         public async Task<IHttpActionResult> GetNotification()
         {
-            NotificationData obj = new NotificationData();
-            StudentData std = new StudentData();
-            string ClassId = std.Get(LoginStdAdmissionNo).Class;
-            var Result = obj.GetNotificationByClass(ClassId);
+            var Result = StudentHelper.GetNotificationByClass(LoginStdAdmissionNo).Result;
             Response res = new Response()
             {
                 ResponseCode = "200",

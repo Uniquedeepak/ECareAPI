@@ -40,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -162,6 +165,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\AutoMapper.cs" />
     <Compile Include="Models\ClaimBindingModel.cs" />
     <Compile Include="Models\ModelFactory.cs" />
     <Compile Include="Models\Response.cs" />
@@ -180,8 +184,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ECare.BAL\ECare.BAL.csproj">
+      <Project>{0a6c2268-2525-46d0-b534-2414819506c7}</Project>
+      <Name>ECare.BAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ECare.Data\ECare.Data.csproj">
-      <Project>{d6aad19e-1ebe-4530-9ff9-85c1e48ae533}</Project>
+      <Project>{D6AAD19E-1EBE-4530-9FF9-85C1E48AE533}</Project>
       <Name>ECare.Data</Name>
     </ProjectReference>
   </ItemGroup>
