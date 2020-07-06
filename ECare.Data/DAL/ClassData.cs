@@ -93,6 +93,23 @@ namespace ECare.Data.DAL
             ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
             return ClassName;
         }
+
+        public static string ClassNameById(string ClassID)
+        {
+            string ClassName = string.Empty;
+            int ID = Convert.ToInt32(ClassID);
+            UnitOfWork unitOfWork = new UnitOfWork();
+            ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
+            return ClassName;
+        }
+
+        public static int ClassIDByName(string SelectedClass)
+        {
+            int ClassID = 0;
+            UnitOfWork unitOfWork = new UnitOfWork();
+            ClassID = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.Class1 == SelectedClass).CID;
+            return ClassID;
+        }
         public int GetClassID(string SelectedClass)
         {
             int ClassID = 0;

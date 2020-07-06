@@ -25,6 +25,7 @@ namespace GenericAPI.UnitOfWork
         private IGenericRepository<House> _HouseRepository;
         private IGenericRepository<Hobby> _HobbyRepository;
         private IGenericRepository<Notification> _NotificationRepository;
+        private IGenericRepository<Leave> _LeaveRepository;
 
         public UnitOfWork()
         {
@@ -92,6 +93,7 @@ namespace GenericAPI.UnitOfWork
         public IGenericRepository<House> HouseRepository => _HouseRepository ?? (_HouseRepository = new GenericRepository<House>(_context));
         public IGenericRepository<Hobby> HobbyRepository => _HobbyRepository ?? (_HobbyRepository = new GenericRepository<Hobby>(_context));
         public IGenericRepository<Notification> NotificationRepository => _NotificationRepository ?? (_NotificationRepository = new GenericRepository<Notification>(_context));
+        public IGenericRepository<Leave> LeaveRepository => _LeaveRepository ?? (_LeaveRepository = new GenericRepository<Leave>(_context));
 
         public void Save()
         {

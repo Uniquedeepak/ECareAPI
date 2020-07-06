@@ -57,28 +57,38 @@ namespace ECare.Data.DAL
         [HttpPut]
         public bool Put(int Id, Notification _Notification)
         {
-            if (_Notification==null)
+            Notification objNotification = unitOfWork.NotificationRepository.GetById(Id);
+            if (objNotification == null)
             {
                 return false;
             }
-
-            if (Id != _Notification.Id)
+            else
             {
-                return false;
+                if (Id != objNotification.Id)
+                {
+                    return false;
+                }
+                else
+                {
+                    objNotification.Name = string.IsNullOrEmpty(_Notification.Name)? objNotification.Name: _Notification.Name;
+                    objNotification.Description = string.IsNullOrEmpty(_Notification.Description) ? objNotification.Description : _Notification.Description;
+                    objNotification.Class = _Notification.Class?? objNotification.Class;
+                    objNotification.Status = _Notification.Status?? objNotification.Status;
+                    objNotification.Type = _Notification.Type?? objNotification.Type;
+                }
             }
             
             try
             {
-                unitOfWork.NotificationRepository.Update(_Notification);
+                unitOfWork.NotificationRepository.Update(objNotification);
                 unitOfWork.Save();
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return false;
+                throw ex;
             }
             return true;
         }
-
         public Notification Delete(int Id)
         {
             Notification _Notification = unitOfWork.NotificationRepository.GetById(Id);
@@ -94,7 +104,7 @@ namespace ECare.Data.DAL
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                return _Notification;
+                throw ex;
             }
             return _Notification;
         }

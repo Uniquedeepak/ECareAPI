@@ -176,6 +176,7 @@
     <Compile Include="DAL\DashboardData.cs" />
     <Compile Include="DAL\ClassData.cs" />
     <Compile Include="DAL\EmployeeData.cs" />
+    <Compile Include="DAL\LeaveData.cs" />
     <Compile Include="DAL\NotificationData.cs" />
     <Compile Include="DAL\MonthData.cs" />
     <Compile Include="DAL\FineData.cs" />
@@ -230,6 +231,9 @@
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="InventoryItem.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Leave.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Licience_Key.cs">

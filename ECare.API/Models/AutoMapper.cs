@@ -15,6 +15,9 @@ namespace ECare.API.Models
                 c.CreateMap<Data.School, BAL.Model.School>();
                 c.CreateMap<Data.Notification, BAL.Model.Notification>();
                 c.CreateMap<Data.tbl_homework, Homework>();
+                c.CreateMap<BAL.Model.Notification, Data.Notification>();
+                c.CreateMap<BAL.Model.Leave, Data.Leave>();
+                c.CreateMap<Data.Leave, BAL.Model.Leave>();
             });
         }
 

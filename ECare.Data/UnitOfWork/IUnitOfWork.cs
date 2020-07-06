@@ -23,6 +23,7 @@ namespace GenericAPI.UnitOfWork
         IGenericRepository<House> HouseRepository { get; }
         IGenericRepository<Hobby> HobbyRepository { get; }
         IGenericRepository<Notification> NotificationRepository { get; }
+        IGenericRepository<Leave> LeaveRepository { get; }
 
         void Save();
     }

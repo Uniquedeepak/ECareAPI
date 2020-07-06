@@ -27,7 +27,7 @@ namespace ECare.API.Controllers
         [Route("School")]
         public async Task<IHttpActionResult> GetSchool()
         {
-            var result = StudentHelper.GetSchool().Result;
+            var result = await StudentHelper.GetSchool();
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -41,7 +41,7 @@ namespace ECare.API.Controllers
         [Route("Student")]
         public async Task<IHttpActionResult> GetStudent()
         {
-            var result = StudentHelper.GetStudent(LoginStdAdmissionNo).Result;
+            var result =await StudentHelper.GetStudent(LoginStdAdmissionNo);
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -55,7 +55,7 @@ namespace ECare.API.Controllers
         [Route("fee")]
         public async Task<IHttpActionResult> GetStudentFee()
         {
-            var Result = StudentHelper.GetStudentFee(LoginStdAdmissionNo).Result;
+            var Result =await StudentHelper.GetStudentFee(LoginStdAdmissionNo);
             Response res = new Response()
             {
                 ResponseCode = "200",
@@ -69,7 +69,7 @@ namespace ECare.API.Controllers
         [Route("homework")]
         public async Task<IHttpActionResult> GetHomework()
         {
-            var homeworkList = StudentHelper.GetHomeworkByClass(LoginStdAdmissionNo).Result;
+            var homeworkList = await StudentHelper.GetHomeworkByClass(LoginStdAdmissionNo);
             
             List<dynamic> Result = new List<dynamic>();
             foreach (var item in homeworkList)
@@ -102,7 +102,7 @@ namespace ECare.API.Controllers
         public async Task<IHttpActionResult> GetFile(int id)
         {
 
-            var homework = StudentHelper.GetHomeworkById(id).Result;
+            var homework = await StudentHelper.GetHomeworkById(id);
 
             if (homework !=null)
             {
@@ -121,20 +121,5 @@ namespace ECare.API.Controllers
             }
             return NotFound();
         }
-
-        [Authorize]
-        [Route("notification")]
-        public async Task<IHttpActionResult> GetNotification()
-        {
-            var Result = StudentHelper.GetNotificationByClass(LoginStdAdmissionNo).Result;
-            Response res = new Response()
-            {
-                ResponseCode = "200",
-                ResponseMessage = "Success",
-                Result = Result
-            };
-            return Ok(res);
-        }
-
     }
 }

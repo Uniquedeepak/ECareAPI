@@ -67,5 +67,6 @@ namespace ECare.Data
         public DbSet<School> Schools { get; set; }
         public DbSet<StudentFeeDetail> StudentFeeDetails { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Leave> Leaves { get; set; }
     }
 }
