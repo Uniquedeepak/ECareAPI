@@ -21,18 +21,11 @@ namespace ECare.API
         public void Configuration(IAppBuilder app)
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
-
-            ECare.API.Models.AutoMapper.Initialize();
-
-            ConfigureOAuthTokenGeneration(app);
-
-            ConfigureOAuthTokenConsumption(app);
-
-            ConfigureWebApi(httpConfig);
-
-            
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
+            ECare.API.Models.AutoMapper.Initialize();
+            ConfigureOAuthTokenGeneration(app);
+            ConfigureOAuthTokenConsumption(app);
+            ConfigureWebApi(httpConfig);
             app.UseWebApi(httpConfig);
 
         }
