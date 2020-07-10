@@ -285,6 +285,19 @@
           <Property Name="Last_Date" Type="nvarchar" MaxLength="50" />
           <Property Name="ExpireTimer" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="LiveClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="StartTime" Type="time" Precision="7" />
+          <Property Name="EndTime" Type="time" Precision="7" />
+          <Property Name="Link" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Months">
           <Key>
             <PropertyRef Name="Id" />
@@ -654,6 +667,7 @@ warning 6002: The table/view 'GreenwoodDB.dbo.TblLoginUser' does not have a prim
           <EntitySet Name="InventoryItem" EntityType="Self.InventoryItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Leave" EntityType="Self.Leave" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Licience_Key" EntityType="Self.Licience_Key" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LiveClass" EntityType="Self.LiveClass" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Months" EntityType="Self.Months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NewFeeHeading" EntityType="Self.NewFeeHeading" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
@@ -1179,6 +1193,7 @@ FROM [dbo].[TblLoginUser] AS [TblLoginUser]</DefiningQuery>
           <EntitySet Name="StudentFeeDetails" EntityType="wisdomDBModel.StudentFeeDetail" />
           <EntitySet Name="Notifications" EntityType="wisdomDBModel.Notification" />
           <EntitySet Name="Leaves" EntityType="wisdomDBModel.Leave" />
+          <EntitySet Name="LiveClasses" EntityType="wisdomDBModel.LiveClass" />
         </EntityContainer>
         <EntityType Name="Session">
           <Key>
@@ -1362,6 +1377,19 @@ FROM [dbo].[TblLoginUser] AS [TblLoginUser]</DefiningQuery>
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="ToDate" Type="DateTime" Precision="3" />
           <Property Name="Class" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LiveClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2032,6 +2060,20 @@ FROM [dbo].[TblLoginUser] AS [TblLoginUser]</DefiningQuery>
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="StuAdmNo" ColumnName="StuAdmNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LiveClasses">
+            <EntityTypeMapping TypeName="wisdomDBModel.LiveClass">
+              <MappingFragment StoreEntitySet="LiveClass">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,0 +1,19 @@
+{
+  "schools": [
+    {
+      "Code": "Default",
+      "DBConnectionString": "wisdomDBEntities",
+      "IdentityConnectionString": "DefaultConnection"
+    },
+    {
+      "Code": "GW",
+      "DBConnectionString": "GreenWoodDBEntities",
+      "IdentityConnectionString": "GreenWoodDBIdentity"
+    },
+    {
+      "Code": "TS",
+      "DBConnectionString": "TenderSoulDBEntities",
+      "IdentityConnectionString": "TenderSoulDBIdentity"
+    }
+  ]
+}

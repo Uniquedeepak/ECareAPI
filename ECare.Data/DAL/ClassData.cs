@@ -13,9 +13,9 @@ namespace ECare.Data.DAL
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly string SchoolSession;
-         public ClassData()
+        public ClassData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
@@ -94,19 +94,17 @@ namespace ECare.Data.DAL
             return ClassName;
         }
 
-        public static string ClassNameById(string ClassID)
+        public string ClassNameById(string ClassID)
         {
             string ClassName = string.Empty;
             int ID = Convert.ToInt32(ClassID);
-            UnitOfWork unitOfWork = new UnitOfWork();
             ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
             return ClassName;
         }
 
-        public static int ClassIDByName(string SelectedClass)
+        public int ClassIDByName(string SelectedClass)
         {
             int ClassID = 0;
-            UnitOfWork unitOfWork = new UnitOfWork();
             ClassID = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.Class1 == SelectedClass).CID;
             return ClassID;
         }

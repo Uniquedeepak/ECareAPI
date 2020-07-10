@@ -13,9 +13,9 @@ namespace ECare.Data.DAL
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public FineData()
+        public FineData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<Fine> GetFines()

@@ -15,9 +15,9 @@ namespace ECare.Data.DAL
     public class HobbyData : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public HobbyData()
+        public HobbyData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<Hobby> GetHobby()

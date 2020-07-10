@@ -24,6 +24,7 @@ namespace GenericAPI.UnitOfWork
         IGenericRepository<Hobby> HobbyRepository { get; }
         IGenericRepository<Notification> NotificationRepository { get; }
         IGenericRepository<Leave> LeaveRepository { get; }
+        IGenericRepository<LiveClass> LiveClassRepository { get; }
 
         void Save();
     }

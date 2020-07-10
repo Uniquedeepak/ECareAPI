@@ -19,9 +19,9 @@ namespace ECare.API.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext("")));
             
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext("")));
 
             var user = new ApplicationUser()
             {

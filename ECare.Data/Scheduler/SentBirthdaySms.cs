@@ -10,18 +10,18 @@ namespace ECare.Data.Scheduler
 {
     public class SentBirthdaySms
     {
-        private static readonly System.Timers.Timer aTimer = null;
-        private static readonly IUnitOfWork unitOfWork;
-        static SentBirthdaySms()
+        private readonly System.Timers.Timer aTimer = null;
+        private readonly IUnitOfWork unitOfWork;
+        public SentBirthdaySms(string csName)
         {
-            unitOfWork = new UnitOfWork();
+            unitOfWork = new UnitOfWork(csName);
             aTimer = new System.Timers.Timer();
             aTimer.Interval = 1000 * 60 * 30 ; //30 Minutes
             aTimer.Elapsed += OnTimerElapsed;
             aTimer.Enabled = true;
         }
 
-        private static void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             DateTime dt = DateTime.Now;
 
@@ -31,7 +31,7 @@ namespace ECare.Data.Scheduler
             }
         }
 
-        private static void SendStudentBirthdaySms()
+        private void SendStudentBirthdaySms()
         {
             var StudentList = (from emp in unitOfWork.AdmissionFormRepository.Get()
                          where emp.DOB.HasValue == true

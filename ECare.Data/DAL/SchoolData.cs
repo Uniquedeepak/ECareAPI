@@ -16,9 +16,9 @@ namespace ECare.Data.DAL
     public class SchoolData
     {
         private readonly IUnitOfWork unitOfWork;
-        public SchoolData()
+        public SchoolData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<School> GetSchool()

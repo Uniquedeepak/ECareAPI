@@ -13,9 +13,9 @@ namespace ECare.Data.DAL
     public class EmployeeData : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public EmployeeData()
+        public EmployeeData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<EmployeeEntry> GetEmployee()

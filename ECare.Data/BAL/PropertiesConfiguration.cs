@@ -14,15 +14,13 @@ namespace ECare.Data.BAL
         public static string AdminNumber { get; set; }
         public static bool IsSMSEnable { get; set; }
         
-        private static wisdomDBEntities SchoolDB = null;
         static PropertiesConfiguration()
         {
-            SchoolDB = new wisdomDBEntities();
             FillProperties();
         }
         private static void FillProperties()
         {
-            ActiveSession = SchoolDB.Sessions.Where(x => x.IsActive == true).Select(s => s.Session1).FirstOrDefault();
+            ActiveSession = "2020-2021";// SchoolDB.Sessions.Where(x => x.IsActive == true).Select(s => s.Session1).FirstOrDefault();
             SMSApiHost = System.Configuration.ConfigurationManager.AppSettings["SMSApiHost"].ToString();
             SMSApiUser = System.Configuration.ConfigurationManager.AppSettings["SMSApiUser"].ToString();
             SMSApiPassword = System.Configuration.ConfigurationManager.AppSettings["SMSApiPassword"].ToString();

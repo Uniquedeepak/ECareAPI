@@ -15,10 +15,14 @@ namespace ECare.Data.DAL
     public class FeesData : ApiController
     {
         private readonly wisdomDBEntities SchoolDB = null;
+        readonly ClassData _class;
         private readonly string SchoolSession;
-        public FeesData()
+        private readonly string ConnectionStringName;
+        public FeesData(string csName)
         {
-            SchoolDB = new wisdomDBEntities();
+            ConnectionStringName = csName;
+            SchoolDB = new wisdomDBEntities(csName);
+            _class = new ClassData(csName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
@@ -26,7 +30,6 @@ namespace ECare.Data.DAL
         public List<StudentFeeDetail> GetStudentFeeDetail(string AdmNo, string Session="")
         {
             string admissionNo = AdmNo.ToString();
-            ClassData _class = new ClassData();
             var StFeeDetail = (from x in SchoolDB.StudentFeeDetails
                                where x.AdmissionNo.Equals(admissionNo) && x.Session.Equals(SchoolSession) 
                                orderby x.Id descending 
@@ -111,7 +114,6 @@ namespace ECare.Data.DAL
                 TransportFee = a.TransportFee
             }).ToList();
 
-            ClassData _class = new ClassData();
             StFeeDetails.ForEach(cc => cc.Class = _class.GetClassName(cc.Class));
             var Sortlist = StFeeDetails.OrderBy(a => a.Id).GroupBy(a => a.AdmissionNo).Select(g => g.Last()).ToList();
             return Sortlist;
@@ -193,14 +195,12 @@ namespace ECare.Data.DAL
                                orderby x.Id descending
                                select x);
             var StFeeDetails = StFeeDetail.ToList();
-            ClassData _class = new ClassData();
             StFeeDetails.ForEach(x=>x.Class=_class.GetClassName(x.Class));
             return StFeeDetails;
         }
 
         public List<NewFeeHeading> GetNewFeeHeading(string SelectedClass)
         {
-            ClassData _class = new ClassData();
             string Selected = _class.GetClassID(SelectedClass).ToString();
             var classFeeDetail = (from x in SchoolDB.NewFeeHeadings
                                   where x.Class.Equals(Selected)
@@ -213,7 +213,6 @@ namespace ECare.Data.DAL
         {
             var classFeeDetail = (from x in SchoolDB.NewFeeHeadings
                                   select x);
-            ClassData _class = new ClassData();
             classFeeDetail.ToList().ForEach(x=>x.Class=_class.GetClassName(x.Class));
             List<NewFeeHeading> FeeHeading = classFeeDetail.ToList();
             return FeeHeading;
@@ -221,7 +220,7 @@ namespace ECare.Data.DAL
 
         public decimal GetStudentFine(string AdmissionNo)
         {
-            Fee obj = new Fee();
+            Fee obj = new Fee(ConnectionStringName);
             var fine = obj.GetFine(AdmissionNo);
             return fine;
         }
@@ -240,7 +239,6 @@ namespace ECare.Data.DAL
             
             if (ModelState.IsValid)
             {
-                ClassData _class = new ClassData();
                 stFeeDetail.Class = Convert.ToString( _class.GetClassID(stFeeDetail.Class));
                 SchoolDB.StudentFeeDetails.Add(stFeeDetail);
                 SchoolDB.SaveChanges();
@@ -299,7 +297,7 @@ namespace ECare.Data.DAL
         public List<StudentFeeDetail> GetPendingFee(string Class, string Months)
         {
             List<StudentFeeDetail> obj = new List<StudentFeeDetail>();
-            Fee objFee = new Fee();
+            Fee objFee = new Fee(ConnectionStringName);
             obj = objFee.GetMonthlyPendingFee(Class,Months);
             return obj;
         }
@@ -307,7 +305,6 @@ namespace ECare.Data.DAL
         #region Fee Heading
         public List<NewFeeHeading> GetFeeHeads()
         {
-            ClassData _class = new ClassData();
             var NewFeeHeadings = SchoolDB.NewFeeHeadings.OrderBy(x => x.FID).ToList();
             NewFeeHeadings.ForEach(x => x.Class = _class.GetClassName(x.Class));
             return NewFeeHeadings;
@@ -321,7 +318,6 @@ namespace ECare.Data.DAL
 
             if (ModelState.IsValid)
             {
-                ClassData _class = new ClassData();
                 newFeeHeading.Class = Convert.ToString(_class.GetClassID(newFeeHeading.Class));
                 SchoolDB.NewFeeHeadings.Add(newFeeHeading);
                 SchoolDB.SaveChanges();
@@ -357,7 +353,6 @@ namespace ECare.Data.DAL
         [HttpPut]
         public bool UpdateFeeHead(int FID, NewFeeHeading newFeeHeading)
         {
-            ClassData _class = new ClassData();
             if (!ModelState.IsValid)
             {
                 return false;

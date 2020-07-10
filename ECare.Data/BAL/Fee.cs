@@ -14,9 +14,11 @@ namespace ECare.Data.BAL
     public class Fee
     {
         private readonly IUnitOfWork unitOfWork;
-        public Fee()
+        readonly ClassData _class;
+        public Fee(string csName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(csName);
+            _class = new ClassData(csName);
         }
         public decimal GetFine(string AdmissionNo)
         {
@@ -71,7 +73,7 @@ namespace ECare.Data.BAL
         public List<StudentFeeDetail> GetMonthlyPendingFee(string Class, string filterMonth)
         {
             List<StudentFeeDetail> obj = new List<StudentFeeDetail>();
-            ClassData _class = new ClassData();
+            
             try
             {
                 #region Student and Fee Collection

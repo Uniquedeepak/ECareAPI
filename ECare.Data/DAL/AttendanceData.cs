@@ -19,17 +19,18 @@ namespace ECare.Data.DAL
     public class AttendanceData : ApiController
     {
         private wisdomDBEntities SchoolDB = null;
+        readonly ClassData _class;
         private string SchoolSession { get; set; }
-        public AttendanceData()
+        public AttendanceData(string csName)
         {
-            SchoolDB = new wisdomDBEntities();
+            SchoolDB = new wisdomDBEntities(csName);
+            _class = new ClassData(csName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
         public List<StAttendance> GetAttendanceCharge()
         {
             var AttendanceCharge = SchoolDB.StAttendances.Where(x=>x.Session==SchoolSession).OrderByDescending(x => x.ID).ToList();
-            ClassData _class = new ClassData();
             AttendanceCharge.ForEach(x=>x.StClass=_class.GetClassName(x.StClass));
             return AttendanceCharge;
         }
@@ -38,7 +39,6 @@ namespace ECare.Data.DAL
         {
             HttpRequestMessage Request = new HttpRequestMessage();
             Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
-            ClassData _class = new ClassData();
             if (ModelState.IsValid)
             {
                 foreach (var item in Attendance)
@@ -60,7 +60,6 @@ namespace ECare.Data.DAL
 
         public bool IsAttendanceMarked(List<StAttendance> Attendance)
         {
-            ClassData _class = new ClassData();
             Attendance.ForEach(x=>x.StClass=_class.GetClassID(x.StClass).ToString());
             var SelectedClass = Attendance.GroupBy(
                                 p => p.StClass,
@@ -91,7 +90,6 @@ namespace ECare.Data.DAL
                             TotalDays = DateTime.Now.Day
 
                         };
-            ClassData _class = new ClassData();
             List<MonthAttendanceReport> ReportList = new List<MonthAttendanceReport>();
             foreach (var item in ReturnVal)
             {

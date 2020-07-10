@@ -14,10 +14,12 @@ namespace ECare.Data.DAL
     public class DashboardData : ApiController
     {
          private wisdomDBEntities SchoolDB = null;
+         readonly ClassData _class;
          private string SchoolSession = "";
-         public DashboardData()
+         public DashboardData(string csName)
         {
-            SchoolDB = new wisdomDBEntities();
+            SchoolDB = new wisdomDBEntities(csName);
+            _class = new ClassData(csName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
@@ -89,7 +91,7 @@ namespace ECare.Data.DAL
             }
             ).ToList();
 
-            ClassData _class = new ClassData();
+     
             objList.ToList().ForEach(x => x.Label = _class.GetClassName(x.Label));
 
             return objList;
@@ -109,7 +111,6 @@ namespace ECare.Data.DAL
                     Data = n.Count().ToString()
                 }
                 ).ToList();
-                ClassData _class = new ClassData();
                 objList.ToList().ForEach(x => x.Label = _class.GetClassName(x.Label));
             }
             catch (Exception ex)
@@ -132,7 +133,6 @@ namespace ECare.Data.DAL
                 Data = n.Sum(x => Convert.ToDecimal(x.Balance)).ToString()
             }
             ).ToList();
-            ClassData _class = new ClassData();
             objList.ToList().ForEach(x => x.Label = _class.GetClassName(x.Label));
             return objList;
         }

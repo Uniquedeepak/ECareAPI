@@ -12,9 +12,9 @@ namespace ECare.Data.DAL
     public class TeacherData : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public TeacherData()
+        public TeacherData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<TeacherAss> GetTeacher()

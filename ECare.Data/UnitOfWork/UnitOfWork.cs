@@ -26,10 +26,11 @@ namespace GenericAPI.UnitOfWork
         private IGenericRepository<Hobby> _HobbyRepository;
         private IGenericRepository<Notification> _NotificationRepository;
         private IGenericRepository<Leave> _LeaveRepository;
+        private IGenericRepository<LiveClass> _LiveClassRepository;
 
-        public UnitOfWork()
+        public UnitOfWork(string csName)
         {
-            _context = new wisdomDBEntities();
+            _context = new wisdomDBEntities(csName);
         }
 
         public IGenericRepository<AdmissionForm> AdmissionFormRepository
@@ -94,6 +95,7 @@ namespace GenericAPI.UnitOfWork
         public IGenericRepository<Hobby> HobbyRepository => _HobbyRepository ?? (_HobbyRepository = new GenericRepository<Hobby>(_context));
         public IGenericRepository<Notification> NotificationRepository => _NotificationRepository ?? (_NotificationRepository = new GenericRepository<Notification>(_context));
         public IGenericRepository<Leave> LeaveRepository => _LeaveRepository ?? (_LeaveRepository = new GenericRepository<Leave>(_context));
+        public IGenericRepository<LiveClass> LiveClassRepository => _LiveClassRepository ?? (_LiveClassRepository = new GenericRepository<LiveClass>(_context));
 
         public void Save()
         {

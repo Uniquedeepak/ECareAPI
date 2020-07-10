@@ -176,6 +176,7 @@
     <Compile Include="DAL\DashboardData.cs" />
     <Compile Include="DAL\ClassData.cs" />
     <Compile Include="DAL\EmployeeData.cs" />
+    <Compile Include="DAL\LiveClassData.cs" />
     <Compile Include="DAL\LeaveData.cs" />
     <Compile Include="DAL\NotificationData.cs" />
     <Compile Include="DAL\MonthData.cs" />
@@ -237,6 +238,9 @@
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Licience_Key.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LiveClass.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MessageTemplate.cs" />
@@ -331,8 +335,10 @@
     </Compile>
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="Utility\ConnectionTools.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Utility\SMS.cs" />
+    <Compile Include="wisdomDBEntities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

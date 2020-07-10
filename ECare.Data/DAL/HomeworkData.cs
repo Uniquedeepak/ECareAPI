@@ -12,14 +12,16 @@ namespace ECare.Data.DAL
     public class HomeworkData
     {
         private readonly IUnitOfWork unitOfWork;
-        public HomeworkData()
+        private readonly string ConnectionName;
+        public HomeworkData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            ConnectionName = CSName;
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<tbl_homework> GetHomeworks()
         {
-            ClassData _class = new ClassData();
+           ClassData _class = new ClassData(ConnectionName);
             var Homeworks = unitOfWork.HomeworkRepository.Get(orderBy: q => q.OrderBy(s => s.id));
             Homeworks.ForEach(cc => cc.@class = _class.GetClassName(cc.@class));
             return Homeworks;

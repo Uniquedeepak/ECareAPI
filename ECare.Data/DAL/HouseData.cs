@@ -15,9 +15,9 @@ namespace ECare.Data.DAL
     public class HouseData : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public HouseData()
+        public HouseData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<House> GetHouse()

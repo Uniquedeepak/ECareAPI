@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using ECare.API.Services;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -18,7 +19,13 @@ namespace ECare.API.Infrastructure
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var appDbContext = context.Get<ApplicationDbContext>();
+            string CsName = SetIdentityConnectionString(context);
+
+            var appDbContext = new ApplicationDbContext(CsName);
+            context.Set<ApplicationDbContext>(appDbContext);
+            context.Set<ApplicationUserManager>(new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext))); //OR USE your specified create Method
+
+           // var appDbContext = context.Get<ApplicationDbContext>();
             var appUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext));
 
             // Configure validation logic for usernames
@@ -51,6 +58,19 @@ namespace ECare.API.Infrastructure
             }
            
             return appUserManager;
+        }
+
+        private static string SetIdentityConnectionString(IOwinContext context)
+        {
+            ConnectionStringNames obj = new ConnectionStringNames();
+            string SchoolCode;
+            if (context.Request.Headers["Code"] != null)
+            {
+                SchoolCode = context.Request.Headers["Code"];
+                obj.GetConnectionStringName(SchoolCode);
+            }
+            obj.GetConnectionStringName("GW"); // TODO: Remove after add header
+            return ConnectionStringNames.DBIdentityName;
         }
     }
 }

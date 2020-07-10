@@ -16,24 +16,26 @@ namespace ECare.Data.DAL
     public class StudentData
     {
         private wisdomDBEntities SchoolDB = null;
-        private string SchoolSession = string.Empty;
-        public StudentData()
+        readonly ClassData _class = null;
+        private readonly string SchoolSession = string.Empty;
+        private readonly string connectionName = string.Empty;
+        public StudentData(string csName)
         {
-            SchoolDB = new wisdomDBEntities();
+            SchoolDB = new wisdomDBEntities(csName);
+            _class = new ClassData(csName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
         // GET api/school/5
         public List<AdmissionForm> GetStudentDetails()
         {
-            ClassData _class = new ClassData();
+            
             var studentDetails = SchoolDB.AdmissionForms.Where(x => x.ESession.Contains(SchoolSession)).OrderBy(x => x.Class).ThenBy(z => z.StFirstName).ToList();
             studentDetails.ForEach(cc => cc.Class = _class.GetClassName(cc.Class));
             return studentDetails;
         }
         public List<AdmissionForm> GetStudentDetailByClass(string ClassID)
         {
-            ClassData _class = new ClassData();
             List<AdmissionForm> studentDetails;
             if (ClassID != "0")
             {
@@ -49,7 +51,6 @@ namespace ECare.Data.DAL
         }
         public List<AdmissionForm> GetMultiChildParent()
         {
-            ClassData _class = new ClassData();
             var studentDetails = SchoolDB.AdmissionForms.Where(x => x.ESession.Contains(SchoolSession)).OrderBy(x => x.Class).ToList();
             studentDetails.ForEach(cc => cc.Class = _class.GetClassName(cc.Class));
             studentDetails = studentDetails.GroupBy(item => item.FatherName)
@@ -98,7 +99,6 @@ namespace ECare.Data.DAL
         [HttpPut]
         public bool Put(int AdmissionId, AdmissionForm student)
         {
-            ClassData _class = new ClassData();
             if (student == null)
             {
                 return false;

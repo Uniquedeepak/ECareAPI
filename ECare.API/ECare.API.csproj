@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="connectionnames.json" />
     <None Include="Properties\PublishProfiles\release.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -175,6 +176,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomJwtFormat.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
+    <Compile Include="Services\ConnectionStringNames.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validators\MyCustomPasswordValidator.cs" />

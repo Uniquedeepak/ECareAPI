@@ -15,9 +15,9 @@ namespace ECare.Data.DAL
     public class TransportData 
     {
         private readonly IUnitOfWork unitOfWork;
-        public TransportData()
+        public TransportData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<TransportCharge> GetTransportCharge()

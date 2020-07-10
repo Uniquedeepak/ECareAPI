@@ -1,4 +1,5 @@
 ﻿using ECare.API.Models;
+using ECare.API.Services;
 using ECare.BAL.Model;
 using ECare.BAL.Module;
 using System;
@@ -18,7 +19,7 @@ namespace ECare.API.Controllers
         ILeaveHelper LeaveHelper = null;
         public LeaveController()
         {
-            LeaveHelper = new LeaveHelper();
+            LeaveHelper = new LeaveHelper(ConnectionStringNames.DBEntityName);
         }
         // GET: api/Leave
         [Route("Leave")]

@@ -13,9 +13,9 @@ namespace ECare.Data.DAL
     public class InventoriesController : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public InventoriesController()
+        public InventoriesController(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
         #region Inventory Category
         public List<InventoryCategory> GetInventoryCategory()

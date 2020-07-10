@@ -22,7 +22,8 @@ namespace ECare.API
         {
             HttpConfiguration httpConfig = new HttpConfiguration();
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            ECare.API.Models.AutoMapper.Initialize();
+            Models.AutoMapper.Initialize();
+            Services.ConnectionStringNames.SetConnectionNameList();
             ConfigureOAuthTokenGeneration(app);
             ConfigureOAuthTokenConsumption(app);
             ConfigureWebApi(httpConfig);
@@ -46,7 +47,7 @@ namespace ECare.API
                 Provider = new CustomOAuthProvider(),
                 AccessTokenFormat = new CustomJwtFormat("http://localhost:59822")
             };
-
+            
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
         }

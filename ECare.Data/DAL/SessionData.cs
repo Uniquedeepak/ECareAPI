@@ -15,9 +15,9 @@ namespace ECare.Data.DAL
     public class SessionData : ApiController
     {
         private readonly IUnitOfWork unitOfWork;
-        public SessionData()
+        public SessionData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<Session> GetSession()

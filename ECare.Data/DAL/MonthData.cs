@@ -13,9 +13,9 @@ namespace ECare.Data.DAL
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public MonthData()
+        public MonthData(string CSName)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = new UnitOfWork(CSName);
         }
 
         public List<Month> GetMonths()

@@ -1,4 +1,5 @@
 ﻿using ECare.API.Models;
+using ECare.API.Services;
 using ECare.BAL.Module;
 using System.Collections.Generic;
 using System.IO;
@@ -15,12 +16,12 @@ namespace ECare.API.Controllers
     [RoutePrefix("api/school")]
     public class StudentController : ApiController
     {
-        string LoginStdAdmissionNo = string.Empty;
-        IStudentHelper StudentHelper = null;
+        readonly string LoginStdAdmissionNo = string.Empty;
+        readonly IStudentHelper StudentHelper = null;
         public StudentController()
         {
             LoginStdAdmissionNo = RequestContext.Principal.Identity.Name;
-            StudentHelper = new StudentHelper();
+            StudentHelper = new StudentHelper(ConnectionStringNames.DBEntityName);
         }
 
         [Authorize]

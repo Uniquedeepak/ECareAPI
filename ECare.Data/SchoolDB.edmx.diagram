@@ -48,6 +48,7 @@
         <EntityTypeShape EntityType="wisdomDBModel.StudentFeeDetail" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="wisdomDBModel.Notification" Width="1.5" PointX="7.375" PointY="8.75" />
         <EntityTypeShape EntityType="wisdomDBModel.Leave" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="wisdomDBModel.LiveClass" Width="1.5" PointX="12.375" PointY="2.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -56,12 +56,15 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Model\Homework.cs" />
     <Compile Include="Model\Leave.cs" />
+    <Compile Include="Model\LiveClass.cs" />
     <Compile Include="Model\Notification.cs" />
     <Compile Include="Model\School.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\StudentFee.cs" />
+    <Compile Include="Module\ILiveClassHelper.cs" />
     <Compile Include="Module\ILeaveHelper.cs" />
     <Compile Include="Module\INotificationHelper.cs" />
+    <Compile Include="Module\LiveClassHelper.cs" />
     <Compile Include="Module\LeaveHelper.cs" />
     <Compile Include="Module\NotificationHelper.cs" />
     <Compile Include="Module\Student\IStudentHelper.cs" />
