@@ -18,6 +18,8 @@ namespace ECare.API.Models
                 c.CreateMap<BAL.Model.Notification, Data.Notification>();
                 c.CreateMap<BAL.Model.Leave, Data.Leave>();
                 c.CreateMap<Data.Leave, BAL.Model.Leave>();
+                c.CreateMap<BAL.Model.LiveClass, Data.LiveClass>();
+                c.CreateMap<Data.LiveClass, BAL.Model.LiveClass>();
             });
         }
 
