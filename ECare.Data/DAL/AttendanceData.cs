@@ -28,7 +28,7 @@ namespace ECare.Data.DAL
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
-        public List<StAttendance> GetAttendanceCharge()
+        public List<StAttendance> GetAttendance()
         {
             var AttendanceCharge = SchoolDB.StAttendances.Where(x=>x.Session==SchoolSession).OrderByDescending(x => x.ID).ToList();
             AttendanceCharge.ForEach(x=>x.StClass=_class.GetClassName(x.StClass));
@@ -97,6 +97,34 @@ namespace ECare.Data.DAL
                 ReportList.Add(item);
             }
             return ReportList;
+
+        }
+
+        public IEnumerable<StAttendance> GetStMonthlyAttendance(string AdmissionNo)
+        {
+            var ReturnVal = from bs in SchoolDB.StAttendances.Where(x => x.StAdmNo == AdmissionNo && x.Session == SchoolSession).ToList()
+                            where Convert.ToDateTime(bs.Date).Month == DateTime.Now.Month
+                            select bs;
+                        //    group bs by new
+                        //    {
+                        //        bs.StAdmNo,
+                        //        bs.StName,
+                        //        bs.StClass
+                        //    }
+                        //into g
+                        //    select new MonthAttendanceReport
+                        //    {
+                        //        AdmissionNo = g.Key.StAdmNo,
+                        //        Name = g.Key.StName,
+                        //        Class = g.Key.StClass,
+                        //        Present = g.Sum(x => x.Attendance.ToUpper() == "PRESENT" ? 1 : 0),
+                        //        Absent = g.Sum(x => x.Attendance.ToUpper() == "ABSENT" ? 1 : 0),
+                        //        Leave = g.Sum(x => x.Attendance.ToUpper() == "LEAVE" ? 1 : 0),
+                        //        TotalDays = DateTime.Now.Day
+
+                        //    };
+            
+            return ReturnVal;
 
         }
 

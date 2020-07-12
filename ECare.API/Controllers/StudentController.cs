@@ -53,6 +53,20 @@ namespace ECare.API.Controllers
         }
 
         [Authorize]
+        [Route("attendance")]
+        public async Task<IHttpActionResult> GetStAttendence()
+        {
+            var Result = await StudentHelper.GetStudentAttendance(LoginStdAdmissionNo);
+            Response res = new Response()
+            {
+                ResponseCode = "200",
+                ResponseMessage = "Success",
+                Result = Result
+            };
+            return Ok(res);
+        }
+
+        [Authorize]
         [Route("fee")]
         public async Task<IHttpActionResult> GetStudentFee()
         {

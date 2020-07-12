@@ -56,6 +56,14 @@ namespace ECare.BAL.Module
             var Students = Mapper.Map<AdmissionForm, Student>(Result);
             return Students;
         }
+
+        public async Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo)
+        {
+            AttendanceData obj = new AttendanceData(csName);
+            var Result = obj.GetStMonthlyAttendance(AdmissionNo).ToList();
+            var Students = Mapper.Map<List<StAttendance>, List<StuAttendance>>(Result);
+            return Students;
+        }
         public async Task<IList<StudentFee>> GetStudentFee(string AdmissionNo)
         {
             FeesData obj = new FeesData(csName);

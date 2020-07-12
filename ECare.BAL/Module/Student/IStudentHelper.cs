@@ -1,4 +1,5 @@
 ﻿using ECare.BAL.Model;
+using ECare.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ECare.BAL.Module
     {
         Task<IList<School>> GetSchool();
         Task<Student> GetStudent(string AdmissionNo);
+        Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo);
         Task<IList<StudentFee>> GetStudentFee(string AdmissionNo);
         Task<Homework> GetHomeworkById(int Id);
         Task<IList<Homework>> GetHomeworkByClass(string AdmissionNo);
