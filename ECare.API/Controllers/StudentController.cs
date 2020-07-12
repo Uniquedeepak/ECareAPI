@@ -45,7 +45,7 @@ namespace ECare.API.Controllers
             var result =await StudentHelper.GetStudent(LoginStdAdmissionNo);
             Response res = new Response()
             {
-                ResponseCode = "200",
+                ResponseCode = result != null? ((int)HttpStatusCode.OK).ToString() : ((int)HttpStatusCode.NotFound).ToString(),
                 ResponseMessage = "Success",
                 Result = result
             };
@@ -56,13 +56,27 @@ namespace ECare.API.Controllers
         [Route("attendance")]
         public async Task<IHttpActionResult> GetStAttendence()
         {
+            Response res;
             var Result = await StudentHelper.GetStudentAttendance(LoginStdAdmissionNo);
-            Response res = new Response()
+            if (Result.Count < 1)
             {
-                ResponseCode = "200",
-                ResponseMessage = "Success",
-                Result = Result
-            };
+                res = new Response()
+                {
+                    ResponseCode = ((int)HttpStatusCode.NotFound).ToString(),
+                    ResponseMessage = "No Record Found.",
+                    Result = Result
+                };
+            }
+            else
+            {
+                res = new Response()
+                {
+                    ResponseCode = ((int)HttpStatusCode.OK).ToString(),
+                    ResponseMessage = "Success",
+                    Result = Result
+                };
+            }
+            
             return Ok(res);
         }
 
@@ -73,7 +87,7 @@ namespace ECare.API.Controllers
             var Result =await StudentHelper.GetStudentFee(LoginStdAdmissionNo);
             Response res = new Response()
             {
-                ResponseCode = "200",
+                ResponseCode = Result.Count < 1? ((int)HttpStatusCode.NotFound).ToString() : ((int)HttpStatusCode.OK).ToString(),
                 ResponseMessage = "Success",
                 Result = Result
             };
@@ -84,31 +98,43 @@ namespace ECare.API.Controllers
         [Route("homework")]
         public async Task<IHttpActionResult> GetHomework()
         {
+            Response res;
             var homeworkList = await StudentHelper.GetHomeworkByClass(LoginStdAdmissionNo);
-            
-            List<dynamic> Result = new List<dynamic>();
-            foreach (var item in homeworkList)
+            if (homeworkList.Count < 1)
             {
-                var homework = new
+                res = new Response()
                 {
-                    Id = item.id,
-                    item.month,
-                    item.name,
-                    item.@class,
-                    item.contenttype,
-                    item.date,
-                    item.desciption,
-                    data = $"Call API - api/school/homework/file/{item.id}"
+                    ResponseCode = ((int)HttpStatusCode.NotFound).ToString(),
+                    ResponseMessage = "No Record Found.",
+                    Result = "No Record Found",
                 };
-                Result.Add(homework);
+            }
+            else
+            {
+                List<dynamic> Result = new List<dynamic>();
+                foreach (var item in homeworkList)
+                {
+                    var homework = new
+                    {
+                        Id = item.id,
+                        item.month,
+                        item.name,
+                        item.@class,
+                        item.contenttype,
+                        item.date,
+                        item.desciption,
+                        data = $"Call API - api/school/homework/file/{item.id}"
+                    };
+                    Result.Add(homework);
+                }
+                res = new Response()
+                {
+                    ResponseCode = ((int)HttpStatusCode.OK).ToString(),
+                    ResponseMessage = "Success",
+                    Result = Result,
+                };
             }
 
-            Response res = new Response()
-            {
-                ResponseCode = "200",
-                ResponseMessage = "Success",
-                Result = Result,
-            };
             return Ok(res);
         }
 
@@ -118,7 +144,6 @@ namespace ECare.API.Controllers
         {
 
             var homework = await StudentHelper.GetHomeworkById(id);
-
             if (homework !=null)
             {
                 MemoryStream stream = new MemoryStream(homework.data);

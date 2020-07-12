@@ -89,25 +89,14 @@ namespace ECare.Data.DAL
         public string GetClassName(string ClassID)
         {
             string ClassName = string.Empty;
-            int ID = Convert.ToInt32(ClassID);
-            ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
+            if (!string.IsNullOrEmpty(ClassID))
+            {
+                int ID = Convert.ToInt32(ClassID);
+                ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
+            }
             return ClassName;
         }
 
-        public string ClassNameById(string ClassID)
-        {
-            string ClassName = string.Empty;
-            int ID = Convert.ToInt32(ClassID);
-            ClassName = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.CID == ID).Class1;
-            return ClassName;
-        }
-
-        public int ClassIDByName(string SelectedClass)
-        {
-            int ClassID = 0;
-            ClassID = unitOfWork.ClassRepository.GetFirstOrDefault(x => x.Class1 == SelectedClass).CID;
-            return ClassID;
-        }
         public int GetClassID(string SelectedClass)
         {
             int ClassID = 0;

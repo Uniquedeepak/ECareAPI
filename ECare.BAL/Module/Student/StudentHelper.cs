@@ -54,6 +54,10 @@ namespace ECare.BAL.Module
             StudentData obj = new StudentData(csName);
             var Result = obj.Get(AdmissionNo);
             var Students = Mapper.Map<AdmissionForm, Student>(Result);
+            if (Students != null)
+            {
+                Students.Class = new ClassData(csName).GetClassName(Students?.Class);
+            }
             return Students;
         }
 
