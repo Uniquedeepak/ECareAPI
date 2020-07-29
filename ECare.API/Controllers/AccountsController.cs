@@ -74,6 +74,8 @@ namespace ECare.API.Controllers
                 Email = createUserModel.Email,
                 FirstName = createUserModel.FirstName,
                 LastName = createUserModel.LastName,
+                SchoolCode = createUserModel.SchoolCode,
+                JoinDate = DateTime.Now
                 //Level = 3,
                 //JoinDate = DateTime.Now.Date,
             };

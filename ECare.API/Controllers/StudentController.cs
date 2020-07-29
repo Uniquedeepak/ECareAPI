@@ -53,11 +53,12 @@ namespace ECare.API.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         [Route("attendance")]
-        public async Task<IHttpActionResult> GetStAttendence()
+        public async Task<IHttpActionResult> GetStAttendence(int MonthId)
         {
             Response res;
-            var Result = await StudentHelper.GetStudentAttendance(LoginStdAdmissionNo);
+            var Result = await StudentHelper.GetStudentAttendance(LoginStdAdmissionNo, MonthId);
             if (Result.Count < 1)
             {
                 res = new Response()

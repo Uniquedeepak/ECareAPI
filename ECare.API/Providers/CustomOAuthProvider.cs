@@ -16,6 +16,8 @@ namespace ECare.API.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
+            string uid = context.Parameters.Where(f => f.Key == "schoolcode").Select(f => f.Value).SingleOrDefault()[0];
+            context.OwinContext.Set<string>("SchoolCode", uid);
             context.Validated();
             return Task.FromResult<object>(null);
         }
@@ -46,7 +48,10 @@ namespace ECare.API.Providers
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager, "JWT");
             oAuthIdentity.AddClaims(ExtendedClaimsProvider.GetClaims(user));
             oAuthIdentity.AddClaims(RolesFromClaims.CreateRolesBasedOnClaims(oAuthIdentity));
-           
+
+            string schoolcode = context.OwinContext.Get<string>("SchoolCode");
+            oAuthIdentity.AddClaim(new Claim("SchoolCode", schoolcode));
+
             var ticket = new AuthenticationTicket(oAuthIdentity, null);
             
             context.Validated(ticket);

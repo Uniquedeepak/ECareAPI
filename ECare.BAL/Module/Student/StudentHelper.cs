@@ -61,10 +61,10 @@ namespace ECare.BAL.Module
             return Students;
         }
 
-        public async Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo)
+        public async Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo, int MonthId)
         {
             AttendanceData obj = new AttendanceData(csName);
-            var Result = obj.GetStMonthlyAttendance(AdmissionNo).ToList();
+            var Result = obj.GetStMonthlyAttendance(AdmissionNo, MonthId).ToList();
             var Students = Mapper.Map<List<StAttendance>, List<StuAttendance>>(Result);
             return Students;
         }

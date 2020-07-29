@@ -12,7 +12,7 @@ namespace ECare.BAL.Module
     {
         Task<IList<School>> GetSchool();
         Task<Student> GetStudent(string AdmissionNo);
-        Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo);
+        Task<List<StuAttendance>> GetStudentAttendance(string AdmissionNo, int MonthId);
         Task<IList<StudentFee>> GetStudentFee(string AdmissionNo);
         Task<Homework> GetHomeworkById(int Id);
         Task<IList<Homework>> GetHomeworkByClass(string AdmissionNo);

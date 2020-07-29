@@ -49,6 +49,11 @@
         <EntityTypeShape EntityType="wisdomDBModel.Notification" Width="1.5" PointX="7.375" PointY="8.75" />
         <EntityTypeShape EntityType="wisdomDBModel.Leave" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="wisdomDBModel.LiveClass" Width="1.5" PointX="12.375" PointY="2.75" />
+        <EntityTypeShape EntityType="wisdomDBModel.Album" Width="1.5" PointX="14.375" PointY="0.875" />
+        <EntityTypeShape EntityType="wisdomDBModel.Photo" Width="1.5" PointX="16.625" PointY="0.875" />
+        <AssociationConnector Association="wisdomDBModel.FK__Photo__ALBUM_ID__778AC167" />
+        <EntityTypeShape EntityType="wisdomDBModel.Feedback" Width="1.5" PointX="7.375" PointY="12.75" />
+        <EntityTypeShape EntityType="wisdomDBModel.Event" Width="1.5" PointX="0.75" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

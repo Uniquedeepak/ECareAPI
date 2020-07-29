@@ -20,11 +20,11 @@ namespace ECare.API.Infrastructure
         [MaxLength(100)]
         public string LastName { get; set; }
 
-        //[Required]
-        //public byte Level { get; set; }
+        [Required]
+        public string SchoolCode { get; set; }
 
-        //[Required]
-        //public DateTime JoinDate { get; set; }
+        [Required]
+        public DateTime JoinDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {

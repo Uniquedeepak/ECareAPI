@@ -13,7 +13,7 @@ namespace ECare.API.Services
     {
         public static JsonConnectionString Collections { get; set; }
         public static string DBEntityName { get; set; }
-        public static string DBIdentityName { get; set; }
+      //  public static string DBIdentityName { get; set; }
         public static void SetConnectionNameList()
         {
             string allText = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath("/") + "Connectionnames.json");
@@ -25,12 +25,12 @@ namespace ECare.API.Services
             if (ConnectionStringData != null)
             {
                 DBEntityName = ConnectionStringData.DBConnectionString;
-                DBIdentityName = ConnectionStringData.IdentityConnectionString;
+              //  DBIdentityName = ConnectionStringData.IdentityConnectionString;
             }
             else
             {
                 DBEntityName = "";
-                DBIdentityName = "";
+         //       DBIdentityName = "";
             }
         }
     }

@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\Feedback.cs" />
     <Compile Include="Model\Homework.cs" />
     <Compile Include="Model\Leave.cs" />
     <Compile Include="Model\LiveClass.cs" />
@@ -62,12 +64,20 @@
     <Compile Include="Model\StuAttendance.cs" />
     <Compile Include="Model\Student.cs" />
     <Compile Include="Model\StudentFee.cs" />
+    <Compile Include="Module\AlbumService.cs" />
+    <Compile Include="Module\EventHelper .cs" />
+    <Compile Include="Module\IAlbumService.cs" />
+    <Compile Include="Module\IEventHelper.cs" />
+    <Compile Include="Module\IFeedbackHelper.cs" />
     <Compile Include="Module\ILiveClassHelper.cs" />
     <Compile Include="Module\ILeaveHelper.cs" />
     <Compile Include="Module\INotificationHelper.cs" />
+    <Compile Include="Module\IPhotoService.cs" />
+    <Compile Include="Module\FeedbackHelper.cs" />
     <Compile Include="Module\LiveClassHelper.cs" />
     <Compile Include="Module\LeaveHelper.cs" />
     <Compile Include="Module\NotificationHelper.cs" />
+    <Compile Include="Module\PhotoService.cs" />
     <Compile Include="Module\Student\IStudentHelper.cs" />
     <Compile Include="Module\Student\StudentHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

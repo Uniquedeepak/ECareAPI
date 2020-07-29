@@ -27,6 +27,10 @@ namespace GenericAPI.UnitOfWork
         private IGenericRepository<Notification> _NotificationRepository;
         private IGenericRepository<Leave> _LeaveRepository;
         private IGenericRepository<LiveClass> _LiveClassRepository;
+        private IGenericRepository<Photo> _PhotoRepository;
+        private IGenericRepository<Album> _AlbumRepository;
+        private IGenericRepository<Feedback> _FeedbackRepository;
+        private IGenericRepository<Event> _EventRepository;
 
         public UnitOfWork(string csName)
         {
@@ -96,6 +100,10 @@ namespace GenericAPI.UnitOfWork
         public IGenericRepository<Notification> NotificationRepository => _NotificationRepository ?? (_NotificationRepository = new GenericRepository<Notification>(_context));
         public IGenericRepository<Leave> LeaveRepository => _LeaveRepository ?? (_LeaveRepository = new GenericRepository<Leave>(_context));
         public IGenericRepository<LiveClass> LiveClassRepository => _LiveClassRepository ?? (_LiveClassRepository = new GenericRepository<LiveClass>(_context));
+        public IGenericRepository<Album> AlbumRepository => _AlbumRepository ?? (_AlbumRepository = new GenericRepository<Album>(_context));
+        public IGenericRepository<Photo> PhotoRepository => _PhotoRepository ?? (_PhotoRepository = new GenericRepository<Photo>(_context));
+        public IGenericRepository<Feedback> FeedbackRepository => _FeedbackRepository ?? (_FeedbackRepository = new GenericRepository<Feedback>(_context));
+        public IGenericRepository<Event> EventRepository => _EventRepository ?? (_EventRepository = new GenericRepository<Event>(_context));
 
         public void Save()
         {

@@ -1,4 +1,5 @@
-﻿using ECare.API.Infrastructure;
+﻿using ECare.API.Filter;
+using ECare.API.Infrastructure;
 using ECare.API.Providers;
 using ECare.BAL.Model;
 using Microsoft.Owin;
@@ -13,6 +14,9 @@ using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web;
+using System.Web.Http.ExceptionHandling;
+using ECare.API.Models;
 
 namespace ECare.API
 {
@@ -47,7 +51,7 @@ namespace ECare.API
                 Provider = new CustomOAuthProvider(),
                 AccessTokenFormat = new CustomJwtFormat("http://localhost:59822")
             };
-            
+
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
         }
@@ -74,6 +78,15 @@ namespace ECare.API
         private void ConfigureWebApi(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+
+            config.MessageHandlers.Add(new SchoolDBHandler());
+            //Registering GlobalExceptionHandler
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+
+
+            //config.Filters.Add(new ClaimsAuthorizationAttribute());
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+                    = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             //var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             //jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

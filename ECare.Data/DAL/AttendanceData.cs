@@ -13,6 +13,8 @@ using System.Web.Http;
 using System.Web.Http.Hosting;
 using ECare.Data.BAL;
 using System.Data.Entity;
+using GenericAPI.UnitOfWork;
+using System.Linq.Expressions;
 
 namespace ECare.Data.DAL
 {
@@ -20,9 +22,11 @@ namespace ECare.Data.DAL
     {
         private wisdomDBEntities SchoolDB = null;
         readonly ClassData _class;
+        private readonly IUnitOfWork unitOfWork;
         private string SchoolSession { get; set; }
         public AttendanceData(string csName)
         {
+            this.unitOfWork = new UnitOfWork(csName);
             SchoolDB = new wisdomDBEntities(csName);
             _class = new ClassData(csName);
             SchoolSession = PropertiesConfiguration.ActiveSession;
@@ -100,31 +104,13 @@ namespace ECare.Data.DAL
 
         }
 
-        public IEnumerable<StAttendance> GetStMonthlyAttendance(string AdmissionNo)
+        public IEnumerable<StAttendance> GetStMonthlyAttendance(string AdmissionNo, int MonthId)
         {
-            var ReturnVal = from bs in SchoolDB.StAttendances.Where(x => x.StAdmNo == AdmissionNo && x.Session == SchoolSession).ToList()
-                            where Convert.ToDateTime(bs.Date).Month == DateTime.Now.Month
+            var stAttendance = from bs in SchoolDB.StAttendances.Where(x => x.StAdmNo == AdmissionNo && x.Session == SchoolSession).ToList()
+                            where Convert.ToDateTime(bs.Date).Month == MonthId
                             select bs;
-                        //    group bs by new
-                        //    {
-                        //        bs.StAdmNo,
-                        //        bs.StName,
-                        //        bs.StClass
-                        //    }
-                        //into g
-                        //    select new MonthAttendanceReport
-                        //    {
-                        //        AdmissionNo = g.Key.StAdmNo,
-                        //        Name = g.Key.StName,
-                        //        Class = g.Key.StClass,
-                        //        Present = g.Sum(x => x.Attendance.ToUpper() == "PRESENT" ? 1 : 0),
-                        //        Absent = g.Sum(x => x.Attendance.ToUpper() == "ABSENT" ? 1 : 0),
-                        //        Leave = g.Sum(x => x.Attendance.ToUpper() == "LEAVE" ? 1 : 0),
-                        //        TotalDays = DateTime.Now.Day
-
-                        //    };
             
-            return ReturnVal;
+            return stAttendance;
 
         }
 

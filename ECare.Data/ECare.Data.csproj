@@ -161,6 +161,9 @@
     <Compile Include="Advanced.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Album.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -173,9 +176,12 @@
     <Compile Include="Class.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\AlbumData.cs" />
     <Compile Include="DAL\DashboardData.cs" />
     <Compile Include="DAL\ClassData.cs" />
     <Compile Include="DAL\EmployeeData.cs" />
+    <Compile Include="DAL\EventData.cs" />
+    <Compile Include="DAL\FeedbackData.cs" />
     <Compile Include="DAL\LiveClassData.cs" />
     <Compile Include="DAL\LeaveData.cs" />
     <Compile Include="DAL\NotificationData.cs" />
@@ -183,6 +189,7 @@
     <Compile Include="DAL\FineData.cs" />
     <Compile Include="DAL\HomeworkData.cs" />
     <Compile Include="DAL\InventoryData.cs" />
+    <Compile Include="DAL\PhotoData.cs" />
     <Compile Include="DAL\SessionData.cs" />
     <Compile Include="DAL\TeacherData.cs" />
     <Compile Include="DAL\AttendanceData.cs" />
@@ -196,6 +203,12 @@
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="EmployeeSalaryDetail.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Event.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="FeesHeading.cs">
@@ -255,6 +268,9 @@
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="PassoutDetail.cs">
+      <DependentUpon>SchoolDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Photo.cs">
       <DependentUpon>SchoolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

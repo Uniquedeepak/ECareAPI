@@ -22,6 +22,10 @@ namespace ECare.API.Models
                 c.CreateMap<Data.LiveClass, BAL.Model.LiveClass>();
                 c.CreateMap<Data.StAttendance, BAL.Model.StuAttendance>();
                 c.CreateMap<BAL.Model.StuAttendance, Data.StAttendance>();
+                c.CreateMap<Data.Feedback, BAL.Model.Feedback>();
+                c.CreateMap<BAL.Model.Feedback, Data.Feedback>();
+                c.CreateMap<Data.Event, BAL.Model.Event>();
+                c.CreateMap<BAL.Model.Event, Data.Event>();
             });
         }
 

@@ -25,6 +25,10 @@ namespace GenericAPI.UnitOfWork
         IGenericRepository<Notification> NotificationRepository { get; }
         IGenericRepository<Leave> LeaveRepository { get; }
         IGenericRepository<LiveClass> LiveClassRepository { get; }
+        IGenericRepository<Album> AlbumRepository { get; }
+        IGenericRepository<Photo> PhotoRepository { get; }
+        IGenericRepository<Feedback> FeedbackRepository { get; }
+        IGenericRepository<Event> EventRepository { get; }
 
         void Save();
     }
