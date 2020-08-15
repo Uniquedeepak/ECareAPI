@@ -17,7 +17,7 @@ namespace ECare.API.Filter
         {
             var result = new HttpResponseMessage(HttpStatusCode.InternalServerError)
             {
-                Content = new StringContent("Internal Server Error Occurred"),
+                Content = new StringContent(context.Exception.Message.ToString()),
                 ReasonPhrase = "Exception"
             };
 

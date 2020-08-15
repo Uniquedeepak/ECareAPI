@@ -41,5 +41,10 @@ namespace ECare.BAL.Module
         {
             data.InsertAlbum(dto);
         }
+
+        public void DeleteAlbum(int Id)
+        {
+            data.DeleteAlbum(Id);
+        }
     }
 }

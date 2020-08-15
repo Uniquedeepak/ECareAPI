@@ -73,7 +73,6 @@ namespace ECare.API.Controllers
             return Ok(res);
         }
 
-        //
         // POST: Album/CreateAlbum
         [HttpPost]
         [Route("CreateAlbum")]
@@ -195,6 +194,35 @@ namespace ECare.API.Controllers
                 };
             }
            
+            return Ok(res);
+        }
+
+        // DELETE: api/Album/Delete/5
+        [Route("Album/Delete/{Id}")]
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
+        public async Task<IHttpActionResult> Delete(int Id)
+        {
+            Response res = null;
+            try
+            {
+                _albumService.DeleteAlbum(Id);
+                res = new Response()
+                {
+                    ResponseCode = "200",
+                    ResponseMessage = "Success",
+                    Result = "Album deleted successfully"
+                };
+            }
+            catch (Exception ex)
+            {
+                res = new Response()
+                {
+                    ResponseCode = HttpStatusCode.InternalServerError.ToString(),
+                    ResponseMessage = "Exception",
+                    Result = ex.Message.ToString()
+                };
+            }
             return Ok(res);
         }
 

@@ -16,5 +16,7 @@ namespace ECare.BAL.Module
         Album GetAlbum(int id);
 
         void InsertAlbum(Album dto);
+
+        void DeleteAlbum(int Id);
     }
 }

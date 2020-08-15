@@ -53,5 +53,24 @@ namespace ECare.Data.DAL
             unitOfWork.AlbumRepository.Insert(entity);
             unitOfWork.Save();
         }
+
+        public void DeleteAlbum(int Id)
+        {
+            if (Id != 0)
+            {
+                var selectedAlbum = unitOfWork.AlbumRepository.Get(x => x.ID == Id)
+                     .SingleOrDefault();
+                var selectedPhotos = unitOfWork.PhotoRepository.Get(x => x.ALBUM_ID == Id).ToList();
+                if (selectedAlbum != null)
+                {
+                    foreach (var item in selectedPhotos)
+                    {
+                        unitOfWork.PhotoRepository.Delete(item.ID);
+                    }
+                    unitOfWork.AlbumRepository.Delete(Id);
+                    unitOfWork.Save();
+                }
+            }
+        }
     }
 }
