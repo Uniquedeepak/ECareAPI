@@ -13,15 +13,22 @@ namespace ECare.BAL.Module
     public class FeedbackHelper : IFeedbackHelper
     {
         readonly FeedbackData data = null;
+        readonly StudentData studentData = null;
         public FeedbackHelper(string CS_Name)
         {
             data = new FeedbackData(CS_Name);
+            studentData = new StudentData(CS_Name);
         }
         public async Task<List<Model.Feedback>> GetFeedbacks()
         {
             
             var FeedbackList = data.GetFeedbacks();
             var Feedback = Mapper.Map<List<Data.Feedback>, List<Model.Feedback>>(FeedbackList);
+            foreach (var item in Feedback)
+            {
+                string ClassId = studentData.Get(item.StuAdmNo).Class;
+                item.Class = studentData.GetClassName(ClassId);
+            };
             return Feedback;
         }
 
@@ -29,7 +36,12 @@ namespace ECare.BAL.Module
         {
 
             var FeedbackList = data.GetStudentFeedbacks(AdmNo);
+            var student =  studentData.Get(AdmNo);
             var Feedback = Mapper.Map<List<Data.Feedback>, List<Model.Feedback>>(FeedbackList);
+            foreach (var item in Feedback)
+            {
+                item.Class = studentData.GetClassName(student.Class);
+            };
             return Feedback;
         }
         public async Task<Model.Feedback> GetFeedback(int Id)

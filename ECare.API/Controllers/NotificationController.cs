@@ -17,8 +17,10 @@ namespace ECare.API.Controllers
     public class NotificationController : ApiController
     {
         INotificationHelper NotificationHelper = null;
+        private readonly string LoginStdAdmissionNo = string.Empty;
         public NotificationController()
         {
+            LoginStdAdmissionNo = RequestContext.Principal.Identity.Name;
             NotificationHelper = new NotificationHelper(ConnectionStringNames.DBEntityName);
         }
 
@@ -31,6 +33,34 @@ namespace ECare.API.Controllers
             try
             {
                 var Result = await NotificationHelper.GetNotifications();
+                res = new Response()
+                {
+                    ResponseCode = "200",
+                    ResponseMessage = "Success",
+                    Result = Result
+                };
+            }
+            catch (Exception ex)
+            {
+                res = new Response()
+                {
+                    ResponseCode = HttpStatusCode.InternalServerError.ToString(),
+                    ResponseMessage = "Exception",
+                    Result = ex.Message.ToString()
+                };
+            }
+            return Ok(res);
+        }
+
+        // GET: api/Notification
+        [HttpGet]
+        [Route("Student/Notification")]
+        public async Task<IHttpActionResult> GetStudentNotification()
+        {
+            Response res = null;
+            try
+            {
+                var Result = await NotificationHelper.GetStudentNotifications(LoginStdAdmissionNo);
                 res = new Response()
                 {
                     ResponseCode = "200",

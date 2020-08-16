@@ -17,8 +17,10 @@ namespace ECare.API.Controllers
     public class LiveClassController : ApiController
     {
         ILiveClassHelper LiveClassHelper = null;
+        private readonly string LoginStdAdmissionNo = string.Empty;
         public LiveClassController()
         {
+            LoginStdAdmissionNo = RequestContext.Principal.Identity.Name;
             LiveClassHelper = new LiveClassHelper(ConnectionStringNames.DBEntityName);
         }
         // GET: api/LiveClass
@@ -30,6 +32,34 @@ namespace ECare.API.Controllers
             try
             {
                 var Result = await LiveClassHelper.GetLiveClasss();
+                res = new Response()
+                {
+                    ResponseCode = "200",
+                    ResponseMessage = "Success",
+                    Result = Result
+                };
+            }
+            catch (Exception ex)
+            {
+                res = new Response()
+                {
+                    ResponseCode = HttpStatusCode.InternalServerError.ToString(),
+                    ResponseMessage = "Exception",
+                    Result = ex.Message.ToString()
+                };
+            }
+            return Ok(res);
+        }
+
+        // GET: api/LiveClass
+        [Route("Student/LiveClass")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetStudentLiveClass()
+        {
+            Response res = null;
+            try
+            {
+                var Result = await LiveClassHelper.GetStudentLiveClasss(LoginStdAdmissionNo);
                 res = new Response()
                 {
                     ResponseCode = "200",

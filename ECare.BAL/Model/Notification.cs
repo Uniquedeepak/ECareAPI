@@ -11,7 +11,7 @@ namespace ECare.BAL.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Class { get; set; }
+        public string Class { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> Type { get; set; }
         public Nullable<int> Status { get; set; }

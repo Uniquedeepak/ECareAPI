@@ -11,6 +11,7 @@ namespace ECare.BAL.Module
     public interface ILiveClassHelper
     {
         Task<List<LiveClass>> GetLiveClasss();
+        Task<List<LiveClass>> GetStudentLiveClasss(string AdmNo);
         Task<LiveClass> GetLiveClass(int Id);
         Task<string> InsertLiveClass(LiveClass _LiveClass);
         Task<string> UpdateLiveClass(int Id, LiveClass _LiveClass);

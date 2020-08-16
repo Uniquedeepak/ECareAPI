@@ -10,6 +10,7 @@ namespace ECare.BAL.Module
     public interface INotificationHelper
     {
         Task<List<Notification>> GetNotifications();
+        Task<List<Notification>> GetStudentNotifications(string AdmNo);
         Task<Notification> GetNotification(int Id);
         Task<string> InsertNotification(Notification _notification);
         Task<string> UpdateNotification(int Id, Notification _notification);

@@ -31,6 +31,10 @@ namespace ECare.BAL.Module
             string ClassId = std.Get(AdmissionNo).Class;
             List<Data.tbl_homework> homeworkList = obj.GetHomeworkByClass(ClassId);
             var HomeworkList = Mapper.Map<IList<Data.tbl_homework>, IList<Homework>>(homeworkList);
+            foreach (var item in HomeworkList)
+            {
+                item.@class = std.GetClassName(item.@class);
+            };
             return HomeworkList;
         }
         public async Task<IList<Model.Notification>> GetNotificationByClass(string AdmissionNo)

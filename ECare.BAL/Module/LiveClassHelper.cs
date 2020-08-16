@@ -4,6 +4,7 @@ using ECare.Data;
 using ECare.Data.DAL;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +14,29 @@ namespace ECare.BAL.Module
     public class LiveClassHelper : ILiveClassHelper
     {
         readonly LiveClassData data = null;
+        readonly StudentData stdData = null;
         public LiveClassHelper(string CS_Name)
         {
             data = new LiveClassData(CS_Name);
+            stdData = new StudentData(CS_Name);
         }
         public async Task<List<Model.LiveClass>> GetLiveClasss()
         {
             
             var LiveClassList = data.GetLiveClasss();
             var LiveClass = Mapper.Map<List<Data.LiveClass>, List<Model.LiveClass>>(LiveClassList);
+            return LiveClass;
+        }
+
+        public async Task<List<Model.LiveClass>> GetStudentLiveClasss(string AdmissionNo)
+        {
+            string ClassId = stdData.Get(AdmissionNo).Class;
+            var LiveClassList = data.GetLiveClasss().Where(x=>x.Class == Convert.ToInt32(ClassId)).ToList();
+            var LiveClass = Mapper.Map<List<Data.LiveClass>, List<Model.LiveClass>>(LiveClassList);
+            foreach (var item in LiveClass)
+            {
+                item.Class = stdData.GetClassName(item.Class);
+            }
             return LiveClass;
         }
         public async Task<Model.LiveClass> GetLiveClass(int Id)

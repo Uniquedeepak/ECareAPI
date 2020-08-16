@@ -13,21 +13,39 @@ namespace ECare.BAL.Module
     public class NotificationHelper : INotificationHelper
     {
         readonly NotificationData data = null;
+        readonly StudentData stdData = null;
         public NotificationHelper(string CS_Name)
         {
             data = new NotificationData(CS_Name);
+            stdData = new StudentData(CS_Name);
         }
         public async Task<List<Model.Notification>> GetNotifications()
         {
             
             var NotificationList = data.GetNotifications();
             var notification = Mapper.Map<List<Data.Notification>, List<Model.Notification>>(NotificationList);
+            foreach (var item in notification)
+            {
+                item.Class = stdData.GetClassName(item.Class);
+            }
+            return notification;
+        }
+        public async Task<List<Model.Notification>> GetStudentNotifications(string AdmissionNo)
+        {
+            string ClassId = stdData.Get(AdmissionNo).Class;
+            var NotificationList = data.GetNotifications().Where(x=>x.Class == Convert.ToInt32(ClassId)).ToList();
+            var notification = Mapper.Map<List<Data.Notification>, List<Model.Notification>>(NotificationList);
+            foreach (var item in notification)
+            {
+                item.Class = stdData.GetClassName(item.Class);
+            }
             return notification;
         }
         public async Task<Model.Notification> GetNotification(int Id)
         {
             var NotificationList = data.Get(Id);
             var notification = Mapper.Map<Data.Notification, Model.Notification>(NotificationList);
+            notification.Class = stdData.GetClassName(notification.Class);
             return notification;
         }
         public async Task<string> InsertNotification(Model.Notification _notification)

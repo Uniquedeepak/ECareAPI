@@ -26,6 +26,34 @@ namespace ECare.Data.DAL
             SchoolSession = PropertiesConfiguration.ActiveSession;
         }
 
+        public string GetClassName(string ClassID)
+        {
+            string ClassName = string.Empty;
+            if (!string.IsNullOrEmpty(ClassID))
+            {
+                int ID = Convert.ToInt32(ClassID);
+                ClassName = _class.GetClassName(ClassID);
+            }
+            return ClassName;
+        }
+
+        public int GetClassID(string SelectedClass)
+        {
+            int ClassID = 0;
+            ClassID = _class.GetClassID(SelectedClass);
+            return ClassID;
+        }
+
+        public string GetNameByAdmissionNo(string AdmNo)
+        {
+            if (!string.IsNullOrEmpty(AdmNo))
+            {
+                var student = Get(AdmNo);
+                return student.StFirstName;
+            }
+            return string.Empty;
+        }
+
         // GET api/school/5
         public List<AdmissionForm> GetStudentDetails()
         {
